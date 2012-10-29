@@ -24,10 +24,16 @@ let set_sockets_dir x =
 let default_uri () = "file:" ^ !default_path
 let json_url () = Printf.sprintf "file:%s.json" !default_path
 
+
 module Request = Cohttp.Request.Make(Cohttp_posix_io.Buffered_IO)
 module Response = Cohttp.Response.Make(Cohttp_posix_io.Buffered_IO)
 
 let colon = Re_str.regexp "[:]"
+
+let switch_rpc string_of_call response_of_string queue_name =
+	let c = Protocol_unix.Client.connect 8080 "org.xen.xenops" in
+	fun call ->
+		response_of_string (Protocol_unix.Client.rpc c (string_of_call call))
 
 (* Use HTTP to frame RPC messages *)
 let http_rpc string_of_call response_of_string ?(srcstr="unset") ?(dststr="unset") url call =
@@ -66,6 +72,7 @@ let http_rpc string_of_call response_of_string ?(srcstr="unset") ?(dststr="unset
 
 let xml_http_rpc = http_rpc Xmlrpc.string_of_call Xmlrpc.response_of_string
 let json_http_rpc = http_rpc Jsonrpc.string_of_call Jsonrpc.response_of_string
+let json_switch_rpc = switch_rpc Jsonrpc.string_of_call Jsonrpc.response_of_string
 
 (* Use a binary 16-byte length to frame RPC messages *)
 let binary_rpc string_of_call response_of_string ?(srcstr="unset") ?(dststr="unset") url (call: Rpc.call) : Rpc.response =
@@ -89,7 +96,7 @@ let binary_rpc string_of_call response_of_string ?(srcstr="unset") ?(dststr="uns
 let marshal_binary_rpc = binary_rpc (fun x -> Marshal.to_string x []) (fun x -> Marshal.from_string x 0)
 let json_binary_rpc = binary_rpc Jsonrpc.string_of_call Jsonrpc.response_of_string
 
-module Client = Xenops_interface.Client(struct let rpc = json_binary_rpc ~srcstr:"xapi" ~dststr:"xenops" json_url end)
+module Client = Xenops_interface.Client(struct let rpc = json_switch_rpc "org.xen.xenops" end)
 
 let query dbg url =
 	let module Remote = Xenops_interface.Client(struct let rpc = xml_http_rpc ~srcstr:"xenops" ~dststr:"dst_xenops" (fun () -> url) end) in

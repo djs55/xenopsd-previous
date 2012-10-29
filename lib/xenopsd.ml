@@ -156,6 +156,17 @@ let accept_forever sock f =
 		) () in
 	()
 
+let listen queue_name =
+	let context = { Xenops_server.transferred_fd = None } in
+	let process x = Jsonrpc.string_of_response (Server.process context (Jsonrpc.call_of_string x)) in
+	let c = Protocol_unix.IO.connect 8080 in
+	debug "listening on %s" queue_name;
+	let (_: Thread.t) = Thread.create
+		(fun () ->
+			Protocol_unix.Server.listen process c "xenopsd" queue_name
+		) () in
+	()
+
 let start (domain_sock, forwarded_sock, json_sock)  =
 	(* JSON/HTTP over domain_sock, no fd passing *)
 	accept_forever domain_sock
