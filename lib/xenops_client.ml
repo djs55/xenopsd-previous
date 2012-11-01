@@ -30,8 +30,8 @@ module Response = Cohttp.Response.Make(Cohttp_posix_io.Buffered_IO)
 
 let colon = Re_str.regexp "[:]"
 
-let switch_rpc string_of_call response_of_string queue_name =
-	let c = Protocol_unix.Client.connect 8080 "org.xen.xenops" in
+let switch_rpc string_of_call response_of_string name queue_name =
+	let c = Protocol_unix.Client.connect name 8080 "org.xen.xenops" in
 	fun call ->
 		response_of_string (Protocol_unix.Client.rpc c (string_of_call call))
 
@@ -96,7 +96,7 @@ let binary_rpc string_of_call response_of_string ?(srcstr="unset") ?(dststr="uns
 let marshal_binary_rpc = binary_rpc (fun x -> Marshal.to_string x []) (fun x -> Marshal.from_string x 0)
 let json_binary_rpc = binary_rpc Jsonrpc.string_of_call Jsonrpc.response_of_string
 
-module Client = Xenops_interface.Client(struct let rpc = json_switch_rpc "org.xen.xenops" end)
+module Client = Xenops_interface.Client(struct let rpc = json_switch_rpc (Printf.sprintf "client.%d" (Unix.getpid ())) "org.xen.xenops" end)
 
 let query dbg url =
 	let module Remote = Xenops_interface.Client(struct let rpc = xml_http_rpc ~srcstr:"xenops" ~dststr:"dst_xenops" (fun () -> url) end) in
