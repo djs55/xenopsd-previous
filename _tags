@@ -1,5 +1,5 @@
 # OASIS_START
-# DO NOT EDIT (digest: 9af53e2b5d60a4da1e67f74c5c39d7b9)
+# DO NOT EDIT (digest: 20de2efcab309f3d95a951434f74fa13)
 # Ignore VCS directories, you can use the same kind of rule outside 
 # OASIS_START/STOP if you want to exclude directories that contains 
 # useless stuff for the build process
@@ -24,6 +24,8 @@
 <lib/*.ml{,i}>: pkg_uri
 <lib/*.ml{,i}>: pkg_rpc
 <lib/*.ml{,i}>: pkg_rpc.syntax
+<lib/*.ml{,i}>: pkg_xenswitch
+<lib/*.ml{,i}>: pkg_xenswitch.unix
 "lib/fd_send_recv_stubs.c": pkg_uuidm
 "lib/fd_send_recv_stubs.c": pkg_syslog
 "lib/fd_send_recv_stubs.c": pkg_threads
@@ -32,6 +34,8 @@
 "lib/fd_send_recv_stubs.c": pkg_uri
 "lib/fd_send_recv_stubs.c": pkg_rpc
 "lib/fd_send_recv_stubs.c": pkg_rpc.syntax
+"lib/fd_send_recv_stubs.c": pkg_xenswitch
+"lib/fd_send_recv_stubs.c": pkg_xenswitch.unix
 # Executable xn
 <cli/xn.{native,byte}>: use_xenops
 <cli/xn.{native,byte}>: pkg_uuidm
@@ -42,6 +46,8 @@
 <cli/xn.{native,byte}>: pkg_uri
 <cli/xn.{native,byte}>: pkg_rpc
 <cli/xn.{native,byte}>: pkg_rpc.syntax
+<cli/xn.{native,byte}>: pkg_xenswitch
+<cli/xn.{native,byte}>: pkg_xenswitch.unix
 <cli/*.ml{,i}>: use_xenops
 <cli/*.ml{,i}>: pkg_uuidm
 <cli/*.ml{,i}>: pkg_syslog
@@ -51,6 +57,8 @@
 <cli/*.ml{,i}>: pkg_uri
 <cli/*.ml{,i}>: pkg_rpc
 <cli/*.ml{,i}>: pkg_rpc.syntax
+<cli/*.ml{,i}>: pkg_xenswitch
+<cli/*.ml{,i}>: pkg_xenswitch.unix
 <cli/xn.{native,byte}>: custom
 # Executable xenopsd_xen
 <xen/xenopsd_xen_main.{native,byte}>: use_xenops
@@ -62,6 +70,8 @@
 <xen/xenopsd_xen_main.{native,byte}>: pkg_uri
 <xen/xenopsd_xen_main.{native,byte}>: pkg_rpc
 <xen/xenopsd_xen_main.{native,byte}>: pkg_rpc.syntax
+<xen/xenopsd_xen_main.{native,byte}>: pkg_xenswitch
+<xen/xenopsd_xen_main.{native,byte}>: pkg_xenswitch.unix
 <xen/*.ml{,i}>: use_xenops
 <xen/*.ml{,i}>: pkg_uuidm
 <xen/*.ml{,i}>: pkg_syslog
@@ -71,6 +81,8 @@
 <xen/*.ml{,i}>: pkg_uri
 <xen/*.ml{,i}>: pkg_rpc
 <xen/*.ml{,i}>: pkg_rpc.syntax
+<xen/*.ml{,i}>: pkg_xenswitch
+<xen/*.ml{,i}>: pkg_xenswitch.unix
 <xen/xenopsd_xen_main.{native,byte}>: custom
 # Executable xenopsd_simulator
 <simulator/xenops_simulator_main.{native,byte}>: use_xenops
@@ -82,6 +94,8 @@
 <simulator/xenops_simulator_main.{native,byte}>: pkg_uri
 <simulator/xenops_simulator_main.{native,byte}>: pkg_rpc
 <simulator/xenops_simulator_main.{native,byte}>: pkg_rpc.syntax
+<simulator/xenops_simulator_main.{native,byte}>: pkg_xenswitch
+<simulator/xenops_simulator_main.{native,byte}>: pkg_xenswitch.unix
 <simulator/*.ml{,i}>: use_xenops
 <simulator/*.ml{,i}>: pkg_uuidm
 <simulator/*.ml{,i}>: pkg_syslog
@@ -91,6 +105,8 @@
 <simulator/*.ml{,i}>: pkg_uri
 <simulator/*.ml{,i}>: pkg_rpc
 <simulator/*.ml{,i}>: pkg_rpc.syntax
+<simulator/*.ml{,i}>: pkg_xenswitch
+<simulator/*.ml{,i}>: pkg_xenswitch.unix
 <simulator/xenops_simulator_main.{native,byte}>: custom
 # Executable test
 <test/test.{native,byte}>: use_xenops
@@ -104,6 +120,8 @@
 <test/test.{native,byte}>: pkg_uri
 <test/test.{native,byte}>: pkg_rpc
 <test/test.{native,byte}>: pkg_rpc.syntax
+<test/test.{native,byte}>: pkg_xenswitch
+<test/test.{native,byte}>: pkg_xenswitch.unix
 <test/*.ml{,i}>: use_xenops
 <test/*.ml{,i}>: pkg_oUnit
 <test/*.ml{,i}>: pkg_unix
@@ -115,6 +133,8 @@
 <test/*.ml{,i}>: pkg_uri
 <test/*.ml{,i}>: pkg_rpc
 <test/*.ml{,i}>: pkg_rpc.syntax
+<test/*.ml{,i}>: pkg_xenswitch
+<test/*.ml{,i}>: pkg_xenswitch.unix
 <test/test.{native,byte}>: custom
 # Executable lib_test
 <lib_test/test.{native,byte}>: use_xenops
@@ -128,6 +148,8 @@
 <lib_test/test.{native,byte}>: pkg_uri
 <lib_test/test.{native,byte}>: pkg_rpc
 <lib_test/test.{native,byte}>: pkg_rpc.syntax
+<lib_test/test.{native,byte}>: pkg_xenswitch
+<lib_test/test.{native,byte}>: pkg_xenswitch.unix
 <lib_test/*.ml{,i}>: use_xenops
 <lib_test/*.ml{,i}>: pkg_oUnit
 <lib_test/*.ml{,i}>: pkg_unix
@@ -139,6 +161,8 @@
 <lib_test/*.ml{,i}>: pkg_uri
 <lib_test/*.ml{,i}>: pkg_rpc
 <lib_test/*.ml{,i}>: pkg_rpc.syntax
+<lib_test/*.ml{,i}>: pkg_xenswitch
+<lib_test/*.ml{,i}>: pkg_xenswitch.unix
 <lib_test/test.{native,byte}>: custom
 # OASIS_STOP
 <*/*>: syntax_camlp4o
