@@ -60,4 +60,4 @@ uninstall:
 
 clean:
 	@obuild clean
-	@rm -f setup.data setup.log setup.bin
+	@rm -f setup.data setup.log setup.bin configure.done
