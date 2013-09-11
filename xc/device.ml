@@ -573,8 +573,7 @@ let add_wait (task: Xenops_task.t) ~xs device =
 	    clean_shutdown task ~xs device; (* assumes double-failure isn't possible *)
 	    release task ~xs device;
 	    raise e
-	end;
-	device
+	end
 
 (* Add the VBD to the domain, When this command returns, the device is ready. (This isn't as
    concurrent as xend-- xend allocates loopdevices via hotplug in parallel and then
@@ -591,7 +590,9 @@ let add (task: Xenops_task.t) ~xs ~hvm x domid =
 					Thread.delay 0.1
 				end else raise e (* permanent failure *)
 		done; Opt.unbox !result in
-	add_wait task ~xs device
+	if not(x.dev_type = CDROM && x.params = "") (* not (empty CDROM) *)
+	then add_wait task ~xs device;
+	device
 
 let qemu_media_change ~xs ~device_number domid _type params =
 	let devid = Device_number.to_xenstore_key device_number in
